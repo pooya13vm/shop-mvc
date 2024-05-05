@@ -1,4 +1,3 @@
-const products = [];
 const fs = require("fs");
 const path = require("path");
 const p = path.join(
