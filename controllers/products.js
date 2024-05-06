@@ -8,14 +8,22 @@ exports.getAddProducts = (req, res) => {
 };
 
 exports.postAddProducts = (req, res) => {
-  const product = new Product(req.body.title);
+  const product = new Product(
+    req.body.title,
+    req.body.imageUrl,
+    req.body.description,
+    req.body.price
+  );
   product.save();
-  res.redirect("/");
+  res.redirect("/admin/products");
 };
 exports.getAdminProductList = (req, res) => {
-  res.render("admin/products", {
-    docTitle: "admin products list",
-    path: "/admin/products",
+  Product.fetchAll((products) => {
+    res.render("admin/products", {
+      prods: products,
+      docTitle: "admin products list",
+      path: "/admin/products",
+    });
   });
 };
 exports.getEditProduct = (req, res) => {
@@ -30,7 +38,7 @@ exports.postEditProduct = (req, res) => {
   // product.save();
   res.redirect("/admin/products");
 };
-//shop controller
+//---------------------shop controller
 exports.indexPage = (req, res, next) => {
   res.render("shop/index", {
     docTitle: "index",
@@ -41,6 +49,18 @@ exports.getCart = (req, res, next) => {
   res.render("shop/cart", {
     docTitle: "Cart",
     path: "/cart",
+  });
+};
+exports.getOrders = (req, res, next) => {
+  res.render("shop/orders", {
+    docTitle: "Your orders",
+    path: "/orders",
+  });
+};
+exports.getCheckout = (req, res, next) => {
+  res.render("shop/checkout", {
+    docTitle: "checkout",
+    path: "/checkout",
   });
 };
 exports.listAllProducts = (req, res, next) => {

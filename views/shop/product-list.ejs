@@ -16,11 +16,13 @@
           />
         </div>
         <div class="card__content">
-          <h2 class="product__price">$199</h2>
-          <p class="product__description">it is very good</p>
+          <h2 class="product__price">$<%= product.price %></h2>
+          <p class="product__description"><%= product.description %></p>
         </div>
         <div class="card__actions">
-          <button class="btn">add to card</button>
+          <form action="/add-to-card" method="POST">
+            <button class="btn" type="submit">add to card</button>
+          </form>
         </div>
       </article>
       <% } %>

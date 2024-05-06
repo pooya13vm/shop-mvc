@@ -22,4 +22,4 @@ app.use("/admin", adminRouter);
 app.use(shopRouter);
 app.use(notFoundRouter);
 
-app.listen(3001);
+app.listen(3000);
