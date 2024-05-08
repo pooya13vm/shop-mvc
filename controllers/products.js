@@ -1,4 +1,5 @@
 const Product = require("../models/product");
+const Cart = require("../models/cart");
 //admin controller
 exports.getAddProducts = (req, res) => {
   res.render("admin/add-product", {
@@ -34,8 +35,7 @@ exports.getEditProduct = (req, res) => {
 };
 
 exports.postEditProduct = (req, res) => {
-  // const product = new Product(req.body.title);
-  // product.save();
+  Product.findById(proId, (product) => {});
   res.redirect("/admin/products");
 };
 //---------------------shop controller
@@ -50,6 +50,13 @@ exports.getCart = (req, res, next) => {
     docTitle: "Cart",
     path: "/cart",
   });
+};
+exports.postCart = (req, res, next) => {
+  const proId = req.body.productId;
+  Product.findById(proId, (product) => {
+    Cart.addProduct(proId, product.price);
+  });
+  res.redirect("/cart");
 };
 exports.getOrders = (req, res, next) => {
   res.render("shop/orders", {
@@ -68,6 +75,18 @@ exports.listAllProducts = (req, res, next) => {
     res.render("shop/product-list", {
       prods: products,
       docTitle: "Shop",
+      path: "shop",
+    });
+  });
+};
+
+exports.getProductDetail = (req, res, next) => {
+  const proId = req.params.productId;
+
+  Product.findById(proId, (product) => {
+    res.render("shop/product-detail", {
+      product: product,
+      docTitle: product.title,
       path: "shop",
     });
   });
